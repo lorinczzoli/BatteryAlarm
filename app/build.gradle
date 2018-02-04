@@ -9,8 +9,12 @@ android {
         def Properties versionProps = new Properties()
         versionProps.load(new FileInputStream(versionPropsFile))
 
-        def code = versionProps['VERSION_CODE'].toInteger() + 1
-        versionProps['VERSION_CODE']=code.toString()
+        def ver_major = versionProps['VERSION_MAJOR'].toInteger();
+        def ver_minor = versionProps['VERSION_MINOR'].toInteger();
+        def ver_patch = versionProps['VERSION_PATCH'].toInteger();
+
+        def ver_build = versionProps['VERSION_BUILD'].toInteger() + 1;
+        versionProps['VERSION_BUILD'] = ver_build.toString()
 
         versionProps.store(versionPropsFile.newWriter(), null)
 
@@ -18,8 +22,8 @@ android {
             applicationId "com.yahoo.lorinczzoli.batteryalarm"
             minSdkVersion 21
             targetSdkVersion 26
-            versionCode code
-            versionName "1.2.0." + code
+            versionCode ver_build
+            versionName "${ver_major}.${ver_minor}.${ver_patch}.${ver_build}"
             testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         }
     }
