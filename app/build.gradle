@@ -16,14 +16,20 @@ android {
         def ver_build = versionProps['VERSION_BUILD'].toInteger() + 1;
         versionProps['VERSION_BUILD'] = ver_build.toString()
 
+        def date = new Date()
+        def ver_date = date.format('yyyy-MM-dd_HHmmss')
+        versionProps['VERSION_DATE'] = ver_date.toString()
+
+        def ver_code = (int)date.getTime()
+
         versionProps.store(versionPropsFile.newWriter(), null)
 
         defaultConfig {
             applicationId "com.yahoo.lorinczzoli.batteryalarm"
             minSdkVersion 21
             targetSdkVersion 26
-            versionCode ver_build
-            versionName "${ver_major}.${ver_minor}.${ver_patch}.${ver_build}"
+            versionCode ver_code
+            versionName "${ver_major}.${ver_minor}.${ver_patch}.${ver_build} (Build ${ver_date})"
             testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         }
     }
