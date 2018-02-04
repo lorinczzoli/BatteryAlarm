@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.yahoo.lorinczzoli.batteryalarm.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alarm conditions:"
+        />
+
+    <CheckBox
+        android:id="@+id/chkLowBattery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Low battery"
+        android:onClick="onClick"
+
+        />
+    <CheckBox
+        android:id="@+id/chkChargerDisconnected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Charger Disconnected"
+        android:onClick="onClick"
+        />
+
+    <Button
+        android:id="@+id/btnStopAlarmSound"
+        android:text="Stop alarm sound"
+        android:enabled="false"
+        android:onClick="onClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sound to be used:"
+        />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rdoRingtone"
+            android:text="Ringtone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            />
+
+        <RadioButton
+            android:id="@+id/rdoAlarm"
+            android:text="Alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSoundTest"
+        android:text="Sound Test"
+        android:onClick="onClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+</LinearLayout>
