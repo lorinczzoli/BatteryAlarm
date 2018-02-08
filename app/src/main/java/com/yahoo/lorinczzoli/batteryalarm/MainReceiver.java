@@ -7,10 +7,6 @@ import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
-import android.telephony.SmsMessage;
-import android.util.Log;
-import android.provider.Telephony;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -18,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainReceiver extends BroadcastReceiver {
 
-    private int nSnoozeDefaultSec = 60;
+    private int nSnoozeSec = 60;
 
     public MainReceiver()
     {
@@ -36,7 +32,7 @@ public class MainReceiver extends BroadcastReceiver {
 
     private static Context contextLast = null;
 
-    public static void StartRinging(Context context, final int nSnoozeSec)
+    public static void StartRinging(Context context, boolean bUseSnooze)
     {
         StopRinging();
 
@@ -44,6 +40,8 @@ public class MainReceiver extends BroadcastReceiver {
         SharedPreferences sp = context.getSharedPreferences(MainActivity.PREF_NAME, Context.MODE_PRIVATE);
         int nSoundType = sp.getInt(MainActivity.KEY_SOUND_TYPE, RingtoneManager.TYPE_RINGTONE);
         boolean bSnoozeActive = sp.getBoolean(MainActivity.KEY_SNOOZE_ACTIVE, false);
+        int nSnoozeSec = sp.getInt(MainActivity.KEY_SNOOZE_MINUTES, 0) * 60;
+        if (bUseSnooze == false) nSnoozeSec = 0;
 
         if (bSnoozeActive || (nSnoozeSec ==0))
         {
@@ -61,7 +59,7 @@ public class MainReceiver extends BroadcastReceiver {
                     new Runnable() {
                         @Override
                         public void run() {
-                            MainReceiver.StartRinging(MainReceiver.contextLast, nSnoozeSec);
+                            MainReceiver.StartRinging(MainReceiver.contextLast, true);
                         }
                     },
                     nSnoozeSec, TimeUnit.SECONDS
@@ -95,7 +93,7 @@ public class MainReceiver extends BroadcastReceiver {
             if (bEnabled)
             {
                 SetSnoozeActive(context, true);
-                StartRinging(context, nSnoozeDefaultSec);
+                StartRinging(context, true);
             }
         }
         else if ( (intent.getAction().equals(Intent.ACTION_BATTERY_OKAY)) ||
@@ -111,7 +109,7 @@ public class MainReceiver extends BroadcastReceiver {
             if (bEnabled)
             {
                 SetSnoozeActive(context, true);
-                StartRinging(context, nSnoozeDefaultSec);
+                StartRinging(context, true);
             }
         }
         else if (intent.getAction().equals(Intent.ACTION_POWER_CONNECTED))

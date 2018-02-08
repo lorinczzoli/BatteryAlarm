@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String KEY_CHARGER_DISCONNECTED_ALARM_ENABLED = "KEY_CHARGER_DISCONNECTED_ALARM_ENABLED";
     public static final String KEY_SOUND_TYPE = "KEY_SOUND_TYPE";
     public static final String KEY_SNOOZE_ACTIVE = "KEY_SNOOZE_ACTIVE";
-    public static final String KEY_SNOOZE_SEC = "KEY_SNOOZE_SEC";
+    public static final String KEY_SNOOZE_MINUTES = "KEY_SNOOZE_MINUTES";
     public static final String PREF_NAME = "Example01";
 
     private static Ringtone r = null;
@@ -86,18 +86,18 @@ public class MainActivity extends AppCompatActivity {
         bEnabled = sp.getBoolean(KEY_SNOOZE_ACTIVE, false);
         btnStopAlarmSound.setEnabled(MainReceiver.IsRinging() || bEnabled);
 
-        int nSnoozeSec = sp.getInt(KEY_SNOOZE_SEC, 0);
-        Log.e("BATT", Integer.toString(nSnoozeSec) );
+        int nSnoozeMin = sp.getInt(KEY_SNOOZE_MINUTES, 0);
+        Log.e("BATT", Integer.toString(nSnoozeMin) );
 
-        if (nSnoozeSec > 0) chkSnooze.setChecked(true);
+        if (nSnoozeMin > 0) chkSnooze.setChecked(true);
         else
         {
             edtSnooze.setEnabled(false);
             txtSnooze.setEnabled(false);
         }
 
-        nSnoozeSec = Math.abs(nSnoozeSec);
-        edtSnooze.setText( Integer.toString(nSnoozeSec) );
+        nSnoozeMin = Math.abs(nSnoozeMin);
+        edtSnooze.setText( Integer.toString(nSnoozeMin) );
     }
 
     public void onClick(View v) {
@@ -129,20 +129,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if (bIsChecked) txtSnooze.requestFocus();
 
-                int nSnoozeSec = 0;
-                String sSnoozeSec = edtSnooze.getText().toString();
+                int nSnoozeMin = 0;
+                String sSnoozeMin = edtSnooze.getText().toString();
 
-                Log.e("BATT", "sSnoozeSec = '" + sSnoozeSec + "'");
-                if (sSnoozeSec.isEmpty() == false) nSnoozeSec = Integer.valueOf(sSnoozeSec);
-                if (bIsChecked == false) nSnoozeSec *= -1;
-
-                Log.e("BATT", nSnoozeSec + " sec");
+                if (sSnoozeMin.isEmpty() == false) nSnoozeMin = Integer.valueOf(sSnoozeMin);
+                if (bIsChecked == false) nSnoozeMin *= -1;
 
                 sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
                 spe = sp.edit();
 
                 bIsChecked = chkChargerDisconnected.isChecked();
-                spe.putInt(KEY_SNOOZE_SEC, nSnoozeSec);
+                spe.putInt(KEY_SNOOZE_MINUTES, nSnoozeMin);
 
                 spe.commit();
 
@@ -160,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    MainReceiver.StartRinging(this, 0);
+                    MainReceiver.StartRinging(this, false);
                 }
                 break;
             case R.id.rdoRingtone:
