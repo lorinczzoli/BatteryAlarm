@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +47,18 @@ public class MainActivity extends AppCompatActivity {
 
         chkSnooze = findViewById(R.id.chkSnooze);
         edtSnooze = findViewById(R.id.edtSnooze);
+        edtSnooze.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                onClick(chkSnooze);
+            }
+        });
         txtSnooze = findViewById(R.id.txtSnooze);
 
         btnStopAlarmSound = findViewById(R.id.btnStopAlarmSound);
