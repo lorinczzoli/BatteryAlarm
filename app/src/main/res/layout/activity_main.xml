@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:text="Low battery"
         android:onClick="onClick"
-
         />
     <CheckBox
         android:id="@+id/chkChargerDisconnected"
@@ -28,6 +27,36 @@
         android:text="Charger Disconnected"
         android:onClick="onClick"
         />
+
+    <TextView
+        android:text="Snooze settings:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <CheckBox
+            android:id="@+id/chkSnooze"
+            android:onClick="onClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edtSnooze"
+            android:inputType="number"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txtSnooze"
+            android:text="minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnStopAlarmSound"
